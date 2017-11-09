@@ -28,12 +28,26 @@ class LinkedList
     }
 
     /**
+     * Converts a value to a Node
+     *
+     * @param Node|int|float|string $value
+     * @return Node
+     */
+    private function toNode($value) {
+        if (!$value instanceof Node)
+            $value = new Node($value);
+        
+        return $value;
+    }
+
+    /**
      * @param Node|int|float|string $node
+     *
+     * @return LinkedList
      */
     public function addFirst($node)
     {
-        if (!$node instanceof Node)
-            $node = new Node($node);
+        $node = $this->toNode($node);
 
         $temp = $this->head;
 
@@ -44,12 +58,29 @@ class LinkedList
 
         if ($this->count === 1)
             $this->tail = $this->head;
+
+        return $this;
     }
 
+    /**
+     * @param Node|int|float|string $node
+     *
+     * @return LinkedList
+     */
     public function addLast($node)
     {
+        $node = $this->toNode($node);
+
         if (!$this->count) {
             $this->head = $node;
         }
+        else {
+            $this->tail->next = $node;
+        }
+
+        $this->tail = $node;
+        $this->count++;
+
+        return $this;
     }
 }
