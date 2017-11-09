@@ -1,6 +1,6 @@
 <?php
 
-namespace calebfoster\Collection\LinkedList;
+namespace calebfoster\Collections\LinkedList;
 
 class Node
 {
@@ -9,6 +9,12 @@ class Node
     /** @var Node */
     public $next;
 
+    /**
+     * Node constructor.
+     *
+     * @param int|float|string $value
+     * @param Node|null $next
+     */
     public function __construct($value, $next = null)
     {
         $this->value = $value;
