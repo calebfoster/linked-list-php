@@ -1,22 +1,24 @@
 <?php
 
-namespace calebfoster\Collection;
+namespace calebfoster\Collections;
+
+use calebfoster\Collections\LinkedList\Node;
 
 /**
-*  A sample class
-*
-*  Use this section to define what this class is doing, the PHPDocumentator will use this
-*  to automatically generate an API documentation using this information.
+*  LinkedList Class
 *
 *  @author Caleb Foster
 */
 class LinkedList
 {
 
+    /** @var Node */
     protected $head;
 
+    /** @var  Node */
     protected $tail;
 
+    /** @var int */
     protected $count;
 
     public function __construct($root = null)
@@ -25,6 +27,9 @@ class LinkedList
         $this->count = 0;
     }
 
+    /**
+     * @param Node|int|float|string $node
+     */
     public function addFirst($node)
     {
         if (!$node instanceof Node)
@@ -33,6 +38,7 @@ class LinkedList
         $temp = $this->head;
 
         $this->head = $node;
+        $this->head->next = $temp;
 
         $this->count++;
 
