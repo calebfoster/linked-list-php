@@ -26,10 +26,11 @@ class LinkedList implements \Iterator
 
     public function __construct($root = null)
     {
-        $node = $this->toNode($root);
-
-        $this->head = $this->tail = $node;
+        $this->head = $this->tail = null;
         $this->count = 0;
+
+        if ($root)
+            $this->addFirst($root);
     }
 
     /**
@@ -167,6 +168,11 @@ class LinkedList implements \Iterator
         return $this;
     }
 
+    public function count()
+    {
+        return $this->count;
+    }
+
     /**
      * Removes all item from the list
      * TODO: make sure PHP gc actually cleans up all items
@@ -176,6 +182,49 @@ class LinkedList implements \Iterator
         $this->head = null;
         $this->tail = null;
         $this->count = 0;
+    }
+
+    /**
+     *
+     */
+    public function contains($itemOrNode)
+    {
+        if ($itemOrNode instanceof Node)
+            return $this->containsNode($itemOrNode);
+
+        return $this->containsItem($itemOrNode);
+    }
+
+    /**
+     * @param $item
+     * @return bool
+     */
+    private function containsItem($item)
+    {
+        $node = $this->head;
+        while ($node !== null) {
+            if ($node->item === $item)
+                return true;
+            $node = $node->next;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Node $testNode
+     * @return bool
+     */
+    private function containsNode($testNode)
+    {
+        $node = $this->head;
+        while ($node !== null) {
+            if ($node === $testNode)
+                return true;
+            $node = $node->next;
+        }
+
+        return false;
     }
 
     /**
