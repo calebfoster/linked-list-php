@@ -26,7 +26,9 @@ class LinkedList implements \Iterator
 
     public function __construct($root = null)
     {
-        $this->head = $this->tail = $root;
+        $node = $this->toNode($root);
+
+        $this->head = $this->tail = $node;
         $this->count = 0;
     }
 
@@ -163,6 +165,17 @@ class LinkedList implements \Iterator
         }
 
         return $this;
+    }
+
+    /**
+     * Removes all item from the list
+     * TODO: make sure PHP gc actually cleans up all items
+     */
+    public function clear()
+    {
+        $this->head = null;
+        $this->tail = null;
+        $this->count = 0;
     }
 
     /**
