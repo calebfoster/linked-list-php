@@ -31,16 +31,16 @@ class LinkedList implements \Iterator
     }
 
     /**
-     * Converts a value to a Node
+     * Converts an item to a Node
      *
-     * @param Node|int|float|string $value
+     * @param Node|int|float|string $item
      * @return Node
      */
-    private function toNode($value) {
-        if (!$value instanceof Node)
-            $value = new Node($value);
+    private function toNode($item) {
+        if (!$item instanceof Node)
+            $item = new Node($item);
         
-        return $value;
+        return $item;
     }
 
     /**
@@ -87,6 +87,47 @@ class LinkedList implements \Iterator
         return $this;
     }
 
+    /**
+     * @param $item
+     * @return bool
+     */
+    public function remove($item)
+    {
+        /** @var Node $previous */
+        $previous = null;
+        $current = $this->head;
+
+        while ($current != null) {
+            // TODO: add type detection or comparator
+            if ($current->item === $item) {
+                // node is not the first node
+                if ($previous != null) {
+                    $previous->next = $current->next;
+
+                    // it was the end, update the tail
+                    if ($current->next === null)
+                        $this->tail = $previous;
+
+                    $this->count--;
+                }
+                else
+                {
+                    $this->removeFirst();
+                }
+
+                return true;
+            }
+
+            $previous = $current;
+            $current = $current->next;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return LinkedList
+     */
     public function removeFirst()
     {
         if ($this->count !== 0) {
@@ -96,6 +137,8 @@ class LinkedList implements \Iterator
             if ($this->count === 0)
                 $this->tail = null;
         }
+
+        return $this;
     }
 
     /**
